@@ -52,10 +52,25 @@ const playerCards = document.querySelectorAll(".player-hand p")
 const dealerCards = document.querySelectorAll(".dealer-hand p")
 const dealerScore = document.querySelector(".dealer-score")
 const standBtn = document.querySelector(".btn#stand")
-const shuffleDeckBtn = document.querySelector("#shuffle-deck");
 const deckSize = document.querySelector(".deck-size");
 const messageSelector = document.querySelector(".message")
 const resetBtn = document.querySelector("#reset")
+const stackSelector = document.querySelector(".stack")
+const potSizeSelector = document.querySelector(".pot-size")
+const bet10Btn = document.querySelector("#bet10");
+const bet50Btn = document.querySelector("#bet50");
+const bet100Btn = document.querySelector("#bet100");
+
+deckSize.style.display = "none"
+let potSize = 0;
+let stackValue = 1000;
+stackSelector.textContent = `Stack: $${stackValue}`;
+potSizeSelector.textContent = `Pot Size: $${potSize}`;
+
+dealCardsBtn.disabled = true;
+resetBtn.disabled = true;
+standBtn.disabled = true;
+hitPlayerBtn.disabled = true;
 
 
 
@@ -63,13 +78,17 @@ const resetBtn = document.querySelector("#reset")
 dealCardsBtn.addEventListener("click", dealCards);
 hitPlayerBtn.addEventListener("click", dealCardPlayer);
 standBtn.addEventListener("click", standHand);
-// shuffleDeckBtn.addEventListener("click", shuffleDeck);
 resetBtn.addEventListener("click", resetTable);
+bet10Btn.addEventListener("click", bet10fn);
+bet50Btn.addEventListener("click", bet50fn);
+bet100Btn.addEventListener("click", bet100fn);
 
 
 
 //dealer/player cards
 function dealCards() {
+
+
     document.querySelector(".dealer-card-1").textContent = generateCard();
     document.querySelector(".dealer-card-2").textContent = generateCard();
     document.querySelector(".player-card-1").textContent = generateCard();
@@ -77,6 +96,7 @@ function dealCards() {
     updatePlayerScore();
     updateDealerScore();
     updateDeckSize();
+    enableButtons();
 
     if (dealtCards.size > 48) {
         shuffleDeck();
@@ -135,29 +155,52 @@ function dealCardDealer() {
 // //finding players hand score
 function calcPlayerScore() {
     playerHandScore = 0;
+    let numAces = 0;
+
 
 
     for (let cardEl of playerCards) {
         if (cardEl.textContent) {
             let card = cardEl.textContent.split(" of ")[0];
 
+            if (card === 'Ace') {
+                numAces += 1;
+            }
+
             playerHandScore = playerHandScore + cardValues[card];
         }
     }
+
+    while (playerHandScore > 21 && numAces >= 1) {
+        playerHandScore = playerHandScore - 10;
+        numAces = numAces - 1;
+    }
+
     return playerHandScore
 }
 
 //finding dealers hand score
 function calcDealerScore() {
     dealerHandScore = 0;
+    numAces = 0
 
     for (let cardEl of dealerCards) {
         if (cardEl.textContent) {
             let card = cardEl.textContent.split(" of ")[0];
 
+            if (card === 'Ace') {
+                numAces += 1;
+            }
+
             dealerHandScore = dealerHandScore + cardValues[card];
         }
     }
+
+    while (dealerHandScore > 21 && numAces >= 1) {
+        dealerHandScore = dealerHandScore - 10;
+        numAces = numAces - 1;
+    }
+
     return dealerHandScore
 }
 
@@ -211,23 +254,28 @@ function determineWinner() {
     } else if (playerScore > 21) {
         result = "Player busted! Dealer wins!";
     } else if (dealerScore > 21) {
+        stackValue = stackValue + potSize * 2
         result = "Dealer busted! Player wins!";
     } else if (playerScore > dealerScore) {
+        stackValue = stackValue + potSize * 2
         result = "Player wins!";
     } else if (dealerScore > playerScore) {
         result = "Dealer wins!";
     } else {
+        stackValue = stackValue + potSize
         result = "It's a draw!";
+        stackSelector.textContent = `Stack: $${stackValue}`;
     }
+
     messageSelector.textContent = result;
-
-
-    dealCardsBtn.disabled = true;
+    stackSelector.textContent = `Stack: $${stackValue}`;
+    // dealCardsBtn.disabled = false;
     hitPlayerBtn.disabled = true;
     standBtn.disabled = true;
 
-}
+    setTimeout(resetTable, 2000)
 
+}
 
 //reset everything but account balance
 function resetTable() {
@@ -237,7 +285,50 @@ function resetTable() {
     playerScore.textContent = "Player Score: ";
     dealerScore.textContent = "Dealer Score: ";
     messageSelector.textContent = "";
+    potSize = 0;
+    potSizeSelector.textContent = `Pot Size: $${potSize}`;
     dealCardsBtn.disabled = false;
     hitPlayerBtn.disabled = false;
     standBtn.disabled = false;
+}
+
+
+//enable/disable buttons
+function enableButtons() {
+    resetBtn.disabled = false;
+    standBtn.disabled = false;
+    hitPlayerBtn.disabled = false;
+    dealCardsBtn.disabled = true;
+}
+//stackValue/potSize
+//add $$$ to pot, decrease from stack
+function bet10fn() {
+    if (stackValue < 10) {
+        return
+    }
+    potSize = potSize + 10;
+    stackValue = stackValue - 10;
+    potSizeSelector.textContent = `Pot Size: $${potSize}`;
+    stackSelector.textContent = `Stack: $${stackValue}`;
+    dealCardsBtn.disabled = false;
+}
+function bet50fn() {
+    if (stackValue < 50) {
+        return
+    }
+    potSize = potSize + 50;
+    stackValue = stackValue - 50;
+    potSizeSelector.textContent = `Pot Size: $${potSize}`;
+    stackSelector.textContent = `Stack: $${stackValue}`;
+    dealCardsBtn.disabled = false;
+}
+function bet100fn() {
+    if (stackValue < 100) {
+        return
+    }
+    potSize = potSize + 100;
+    stackValue = stackValue - 100;
+    potSizeSelector.textContent = `Pot Size: $${potSize}`;
+    stackSelector.textContent = `Stack: $${stackValue}`;
+    dealCardsBtn.disabled = false;
 }
