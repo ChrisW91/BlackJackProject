@@ -90,7 +90,6 @@ function dealCards() {
 
 
     document.querySelector(".dealer-card-1").textContent = generateCard();
-    document.querySelector(".dealer-card-2").textContent = generateCard();
     document.querySelector(".player-card-1").textContent = generateCard();
     document.querySelector(".player-card-2").textContent = generateCard();
     updatePlayerScore();
@@ -129,25 +128,30 @@ function dealCardPlayer() {
 
 //loop to deal single card to dealer until dealer score is higher than player or bust
 function dealCardDealer() {
+
+
     let dealerScoreValue = calcDealerScore();
 
     while (dealerScoreValue < 17 || (dealerScoreValue < playerHandScore && dealerScoreValue <= 21)) {
         for (let cardEl of dealerCards) {
             if (!cardEl.textContent || cardEl.textContent === "") {
+
                 cardEl.textContent = generateCard();
                 break;
             }
         }
         dealerScoreValue = calcDealerScore();
     }
+
     updateDealerScore();
     updateDeckSize();
-
 
     if (dealtCards.size > 50) {
         shuffleDeck();
         updateDeckSize();
     }
+
+
 }
 
 
@@ -273,7 +277,7 @@ function determineWinner() {
     hitPlayerBtn.disabled = true;
     standBtn.disabled = true;
 
-    setTimeout(resetTable, 2000)
+    setTimeout(resetTable, 3500)
 
 }
 
@@ -290,6 +294,9 @@ function resetTable() {
     dealCardsBtn.disabled = false;
     hitPlayerBtn.disabled = false;
     standBtn.disabled = false;
+    bet10Btn.disabled = false;
+    bet50Btn.disabled = false;
+    bet100Btn.disabled = false;
 }
 
 
@@ -299,6 +306,9 @@ function enableButtons() {
     standBtn.disabled = false;
     hitPlayerBtn.disabled = false;
     dealCardsBtn.disabled = true;
+    bet10Btn.disabled = true;
+    bet50Btn.disabled = true;
+    bet100Btn.disabled = true;
 }
 //stackValue/potSize
 //add $$$ to pot, decrease from stack
