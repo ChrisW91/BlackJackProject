@@ -57,7 +57,7 @@ body {
 .message {
   min-height: 3rem;
   font-size: 2rem;
-  color: red;
+  color: #F5C812;
 }
 
 .btn {
@@ -71,9 +71,90 @@ body {
   font-size: 1rem;
 }
 
+#bet10 {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+
+}
+
+#bet10 img {
+  height: 100px;
+  width: 100px;
+}
+
+.bet10text {
+  position: absolute;
+  top: 32%;
+  left: 48%;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  transform: translate(-50%, -50%);
+
+}
+
+
+#bet50 {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+
+}
+
+#bet50 img {
+  height: 100px;
+  width: 100px;
+}
+
+.bet50text {
+  position: absolute;
+  top: 32%;
+  left: 48%;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  transform: translate(-50%, -50%);
+
+}
 
 
 
+
+#bet100 {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+
+}
+
+#bet100 img {
+  height: 100px;
+  width: 100px;
+}
+
+.bet100text {
+  position: absolute;
+  top: 32%;
+  left: 48%;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  transform: translate(-50%, -50%);
+
+}
 
 
 

@@ -88,7 +88,7 @@ const bet100Btn = document.querySelector("#bet100");
 
 deckSize.style.display = "none"
 let potSize = 0;
-let stackValue = 1000;
+let stackValue = 10000;
 stackSelector.textContent = `Stack: $${stackValue}`;
 potSizeSelector.textContent = `Pot Size: $${potSize}`;
 
