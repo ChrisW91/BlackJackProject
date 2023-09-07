@@ -58,6 +58,7 @@ function setCard(selector, cardInfo) {
     cardEl.textContent = cardInfo.text;
     cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
     cardEl.classList.add("card")
+    // cardEl.classList.remove("hidden")
 }
 
 
@@ -138,6 +139,7 @@ function dealCardPlayer() {
             cardEl.textContent = cardInfo.text;
             cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
             cardEl.classList.add("card")
+
             break;
         }
     }
@@ -171,6 +173,7 @@ function dealCardDealer() {
                 cardEl.textContent = cardInfo.text;
                 cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
                 cardEl.classList.add("card")
+                // cardEl.classList.remove("hidden")
                 break;
             }
         }
@@ -322,8 +325,8 @@ function resetTable() {
     shuffleDeck();
     playerCards.forEach(card => card.textContent = "");
     dealerCards.forEach(card => card.textContent = "");
-    playerScore.textContent = "Player Score: ";
-    dealerScore.textContent = "Dealer Score: ";
+    playerScore.textContent = "";
+    dealerScore.textContent = "";
     messageSelector.textContent = "";
     potSize = 0;
     potSizeSelector.textContent = `Pot Size: $${potSize}`;
@@ -333,6 +336,7 @@ function resetTable() {
     bet10Btn.disabled = false;
     bet50Btn.disabled = false;
     bet100Btn.disabled = false;
+
 }
 
 
