@@ -19,6 +19,7 @@ body {
   padding-top: 10%;
   /* padding-bottom: 10%; */
   text-align: center;
+  height: 100%;
 }
 
 .hidden {
@@ -79,6 +80,7 @@ body {
   cursor: pointer;
   outline: none;
 
+
 }
 
 #bet10 img {
@@ -107,11 +109,15 @@ body {
   cursor: pointer;
   outline: none;
 
+
+
 }
 
 #bet50 img {
   height: 100px;
   width: 100px;
+
+
 }
 
 .bet50text {
@@ -155,6 +161,99 @@ body {
   transform: translate(-50%, -50%);
 
 }
+
+#hit {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+
+
+#hit img {
+  height: 100px;
+  width: 100px;
+  transform: scaleX(-1);
+}
+
+.hitText {
+  position: absolute;
+  left: 34%;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  opacity: 40%;
+
+
+}
+
+
+
+
+#stand {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+
+
+}
+
+#stand img {
+  height: 100px;
+  width: 100px;
+  transform: rotate(45deg);
+}
+
+.standText {
+  position: absolute;
+  left: 40%;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  opacity: 40%;
+
+}
+
+#deal-cards {
+  position: relative;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  left: 2%;
+
+
+}
+
+#deal-cards img {
+  height: 100px;
+  width: 100px;
+
+}
+
+.dealcardsText {
+  position: absolute;
+  left: 5%;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  opacity: 40%;
+
+}
+
+
+
+
 
 
 

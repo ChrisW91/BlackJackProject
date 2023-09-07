@@ -92,6 +92,10 @@ let stackValue = 10000;
 stackSelector.textContent = `Stack: $${stackValue}`;
 potSizeSelector.textContent = `Pot Size: $${potSize}`;
 
+if (potSize === 0) {
+    messageSelector.textContent = "Place Bet!"
+}
+
 dealCardsBtn.disabled = true;
 resetBtn.disabled = true;
 standBtn.disabled = true;
@@ -112,6 +116,10 @@ bet100Btn.addEventListener("click", bet100fn);
 
 //dealer/player cards
 function dealCards() {
+
+    if (potSize !== 0) {
+        messageSelector.textContent = ""
+    }
 
     setCard(".dealer-card-1", generateCard());
     setCard(".player-card-1", generateCard());
@@ -173,7 +181,7 @@ function dealCardDealer() {
                 cardEl.textContent = cardInfo.text;
                 cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
                 cardEl.classList.add("card")
-                // cardEl.classList.remove("hidden")
+
                 break;
             }
         }
@@ -313,6 +321,8 @@ function determineWinner() {
     hitPlayerBtn.disabled = true;
     standBtn.disabled = true;
 
+
+
     setTimeout(resetTable, 3500)
 
 }
@@ -336,6 +346,10 @@ function resetTable() {
     bet10Btn.disabled = false;
     bet50Btn.disabled = false;
     bet100Btn.disabled = false;
+
+    if (potSize === 0) {
+        messageSelector.textContent = "Place Bet!"
+    }
 
 }
 
@@ -361,6 +375,8 @@ function bet10fn() {
     potSizeSelector.textContent = `Pot Size: $${potSize}`;
     stackSelector.textContent = `Stack: $${stackValue}`;
     dealCardsBtn.disabled = false;
+
+
 }
 function bet50fn() {
     if (stackValue < 50) {
