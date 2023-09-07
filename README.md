@@ -5,8 +5,7 @@
 
 
 
-
-!(https://imgur.com/zB9mXil).
+!https://imgur.com/zB9mXil
 
 
 
