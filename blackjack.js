@@ -2,18 +2,18 @@
 //Deck of cards
 let dealtCards = new Set();
 var suits = ["spades", "diamonds", "clubs", "hearts"];
-var values = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+var values = ["A", "r02", "r03", "r04", "r05", "r06", "r07", "r08", "r09", "r10", "J", "Q", "K"];
 var cardValues = {
-    "Ace": 11,
-    "2": 2,
-    "3": 3,
-    "4": 4,
-    "5": 5,
-    "6": 6,
-    "7": 7,
-    "8": 8,
-    "9": 9,
-    "10": 10,
+    "A": 11,
+    "r02": 2,
+    "r03": 3,
+    "r04": 4,
+    "r05": 5,
+    "r06": 6,
+    "r07": 7,
+    "r08": 8,
+    "r09": 9,
+    "r10": 10,
     "J": 10,
     "Q": 10,
     "K": 10,
@@ -32,15 +32,39 @@ function getRandomNumber(array) {
 function getRandomArr(array) {
     return array[getRandomNumber(array)];
 }
-//pick random card & if same card already dealt will generate new card
+
+
+//generates random card, if duplicate will reroll card. assigns suit and value as class id
 function generateCard() {
-    let card;
+    let cardText, valueClass, suitClass, value, suit;
     do {
-        card = getRandomArr(values) + " of " + getRandomArr(suits);
-    } while (dealtCards.has(card));
-    dealtCards.add(card);
-    return card;
+        value = getRandomArr(values);
+        suit = getRandomArr(suits);
+        cardText = value + " of " + suit;
+        valueClass = value;
+        suitClass = suit;
+    } while (dealtCards.has(cardText));
+
+    dealtCards.add(cardText);
+    return {
+        text: cardText,
+        valueClass: valueClass,
+        suitClass: suitClass
+    };
 }
+
+function setCard(selector, cardInfo) {
+    let cardEl = document.querySelector(selector);
+    cardEl.textContent = cardInfo.text;
+    cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
+    cardEl.classList.add("card")
+}
+
+
+
+
+
+
 
 
 //object selectors 
@@ -88,10 +112,10 @@ bet100Btn.addEventListener("click", bet100fn);
 //dealer/player cards
 function dealCards() {
 
+    setCard(".dealer-card-1", generateCard());
+    setCard(".player-card-1", generateCard());
+    setCard(".player-card-2", generateCard());
 
-    document.querySelector(".dealer-card-1").textContent = generateCard();
-    document.querySelector(".player-card-1").textContent = generateCard();
-    document.querySelector(".player-card-2").textContent = generateCard();
     updatePlayerScore();
     updateDealerScore();
     updateDeckSize();
@@ -104,15 +128,23 @@ function dealCards() {
 }
 
 
-//deal single card to player on hit
-function dealCardPlayer() {
+//deal single card to player on hit, add suit and value to class
 
+
+function dealCardPlayer() {
     for (let cardEl of playerCards) {
         if (!cardEl.textContent || cardEl.textContent === "") {
-            cardEl.textContent = generateCard();
+            let cardInfo = generateCard();
+            cardEl.textContent = cardInfo.text;
+            cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
+            cardEl.classList.add("card")
             break;
         }
     }
+
+
+
+
     updatePlayerScore();
     updateDeckSize()
 
@@ -126,17 +158,19 @@ function dealCardPlayer() {
     }
 }
 
-//loop to deal single card to dealer until dealer score is higher than player or bust
+//loop to deal single card to dealer until dealer score is higher than player or bust. adds suit and value to class id
+
+
 function dealCardDealer() {
-
-
     let dealerScoreValue = calcDealerScore();
 
     while (dealerScoreValue < 17 || (dealerScoreValue < playerHandScore && dealerScoreValue <= 21)) {
         for (let cardEl of dealerCards) {
             if (!cardEl.textContent || cardEl.textContent === "") {
-
-                cardEl.textContent = generateCard();
+                let cardInfo = generateCard();
+                cardEl.textContent = cardInfo.text;
+                cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
+                cardEl.classList.add("card")
                 break;
             }
         }
@@ -151,8 +185,8 @@ function dealCardDealer() {
         updateDeckSize();
     }
 
-
 }
+
 
 
 
@@ -273,7 +307,6 @@ function determineWinner() {
 
     messageSelector.textContent = result;
     stackSelector.textContent = `Stack: $${stackValue}`;
-    // dealCardsBtn.disabled = false;
     hitPlayerBtn.disabled = true;
     standBtn.disabled = true;
 
@@ -283,6 +316,9 @@ function determineWinner() {
 
 //reset everything but account balance
 function resetTable() {
+
+
+    removeCardClasses();
     shuffleDeck();
     playerCards.forEach(card => card.textContent = "");
     dealerCards.forEach(card => card.textContent = "");
@@ -291,9 +327,9 @@ function resetTable() {
     messageSelector.textContent = "";
     potSize = 0;
     potSizeSelector.textContent = `Pot Size: $${potSize}`;
-    dealCardsBtn.disabled = false;
-    hitPlayerBtn.disabled = false;
-    standBtn.disabled = false;
+    dealCardsBtn.disabled = true;
+    hitPlayerBtn.disabled = true;
+    standBtn.disabled = true;
     bet10Btn.disabled = false;
     bet50Btn.disabled = false;
     bet100Btn.disabled = false;
@@ -341,4 +377,37 @@ function bet100fn() {
     potSizeSelector.textContent = `Pot Size: $${potSize}`;
     stackSelector.textContent = `Stack: $${stackValue}`;
     dealCardsBtn.disabled = false;
+}
+
+//remove assigned class of suit and value
+
+function removeCardClasses() {
+
+
+    playerCards.forEach(card => {
+        card.classList.remove("card");
+        card.textContent = "";
+
+        ['hearts', 'diamonds', 'clubs', 'spades'].forEach(suit => card.classList.remove(suit));
+
+        values.forEach(value => {
+            card.classList.remove(value);
+        });
+    });
+
+
+    dealerCards.forEach(card => {
+        card.classList.remove("card");
+        card.textContent = "";
+
+        ['hearts', 'diamonds', 'clubs', 'spades'].forEach(suit => card.classList.remove(suit));
+
+        values.forEach(value => {
+            card.classList.remove(value);
+        });
+
+    });
+
+
+
 }
