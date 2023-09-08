@@ -29,25 +29,19 @@ body {
 .player-score {
   margin: 0;
   min-height: 3rem;
-
-
-
 }
 
 .dealer-score {
   margin: 0;
   min-height: 3rem;
-
 }
 
 .player-hand {
   min-height: 7rem;
-
 }
 
 .dealer-hand {
   min-height: 7rem;
-
 }
 
 .pot-size {
@@ -79,13 +73,6 @@ body {
   padding: 0;
   cursor: pointer;
   outline: none;
-
-
-}
-
-#bet10 img {
-  height: 100px;
-  width: 100px;
 }
 
 .bet10text {
@@ -93,13 +80,11 @@ body {
   top: 32%;
   left: 48%;
   color: white;
-  font-size: 18px;
+  font-size: 1vw;
   font-weight: bold;
   text-align: center;
   transform: translate(-50%, -50%);
-
 }
-
 
 #bet50 {
   position: relative;
@@ -108,16 +93,6 @@ body {
   padding: 0;
   cursor: pointer;
   outline: none;
-
-
-
-}
-
-#bet50 img {
-  height: 100px;
-  width: 100px;
-
-
 }
 
 .bet50text {
@@ -125,15 +100,11 @@ body {
   top: 32%;
   left: 48%;
   color: white;
-  font-size: 18px;
+  font-size: 1vw;
   font-weight: bold;
   text-align: center;
   transform: translate(-50%, -50%);
-
 }
-
-
-
 
 #bet100 {
   position: relative;
@@ -142,12 +113,6 @@ body {
   padding: 0;
   cursor: pointer;
   outline: none;
-
-}
-
-#bet100 img {
-  height: 100px;
-  width: 100px;
 }
 
 .bet100text {
@@ -155,11 +120,10 @@ body {
   top: 32%;
   left: 48%;
   color: white;
-  font-size: 18px;
+  font-size: 1vw;
   font-weight: bold;
   text-align: center;
   transform: translate(-50%, -50%);
-
 }
 
 #hit {
@@ -171,28 +135,19 @@ body {
   outline: none;
 }
 
-
-
 #hit img {
-  height: 100px;
-  width: 100px;
   transform: scaleX(-1);
 }
 
 .hitText {
   position: absolute;
-  left: 34%;
+  left: 30%;
   color: white;
-  font-size: 18px;
+  font-size: 1vw;
   font-weight: bold;
   text-align: center;
   opacity: 40%;
-
-
 }
-
-
-
 
 #stand {
   position: relative;
@@ -201,25 +156,20 @@ body {
   padding: 0;
   cursor: pointer;
   outline: none;
-
-
 }
 
 #stand img {
-  height: 100px;
-  width: 100px;
   transform: rotate(45deg);
 }
 
 .standText {
   position: absolute;
-  left: 40%;
+  left: 30%;
   color: white;
-  font-size: 18px;
+  font-size: 1vw;
   font-weight: bold;
   text-align: center;
   opacity: 40%;
-
 }
 
 #deal-cards {
@@ -230,25 +180,21 @@ body {
   cursor: pointer;
   outline: none;
   left: 2%;
-
-
-}
-
-#deal-cards img {
-  height: 100px;
-  width: 100px;
-
 }
 
 .dealcardsText {
   position: absolute;
   left: 5%;
   color: white;
-  font-size: 18px;
+  font-size: 1vw;
   font-weight: bold;
   text-align: center;
   opacity: 40%;
+}
 
+.btn img {
+  height: 6vw;
+  width: 6vw;
 }
 
 
