@@ -287,8 +287,12 @@ function determineWinner() {
 function resetTable() {
     removeCardClasses();
     shuffleDeck();
-    playerCards.forEach(card => card.textContent = "");
-    dealerCards.forEach(card => card.textContent = "");
+    playerCards.forEach(function (card) {
+        card.textContent = "";
+    });
+    dealerCards.forEach(function (card) {
+        card.textContent = "";
+    });
     playerScore.textContent = "";
     dealerScore.textContent = "";
     messageSelector.textContent = "";
@@ -358,28 +362,33 @@ function bet100fn() {
 //remove assigned class of suit and value
 function removeCardClasses() {
 
-    playerCards.forEach(card => {
+    playerCards.forEach(function (card) {
         card.classList.remove("card");
         card.textContent = "";
 
-        ['hearts', 'diamonds', 'clubs', 'spades'].forEach(suit => card.classList.remove(suit));
+        ['hearts', 'diamonds', 'clubs', 'spades'].forEach(function (suit) {
+            card.classList.remove(suit);
+        });
 
-        values.forEach(value => {
+        values.forEach(function (value) {
             card.classList.remove(value);
         });
     });
 
-    dealerCards.forEach(card => {
+    dealerCards.forEach(function (card) {
         card.classList.remove("card");
         card.textContent = "";
 
-        ['hearts', 'diamonds', 'clubs', 'spades'].forEach(suit => card.classList.remove(suit));
+        ['hearts', 'diamonds', 'clubs', 'spades'].forEach(function (suit) {
+            card.classList.remove(suit);
+        });
 
-        values.forEach(value => {
+        values.forEach(function (value) {
             card.classList.remove(value);
         });
     });
 }
+
 
 function playPokerChipAudio() {
     const pokerChipAudio = document.getElementById("audio-pokerchip")
