@@ -109,6 +109,7 @@ function dealCards() {
         setCard(".player-card-1", generateCard());
         setCard(".player-card-2", generateCard());
 
+
         updatePlayerScore();
         updateDealerScore();
         updateDeckSize();
@@ -119,6 +120,11 @@ function dealCards() {
             updateDeckSize();
         }
     }, 1000);
+
+    while (dealerHandScore > 21 && numAces >= 1) {
+        dealerHandScore = dealerHandScore - 10;
+        numAces = numAces - 1;
+    }
 }
 
 //deal single card to player on hit, add suit and value as class id
