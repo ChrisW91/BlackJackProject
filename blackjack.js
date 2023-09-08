@@ -20,10 +20,6 @@ var cardValues = {
 
 }
 
-
-
-
-
 //generate random number
 function getRandomNumber(array) {
     return Math.floor(Math.random() * array.length)
@@ -32,9 +28,7 @@ function getRandomNumber(array) {
 function getRandomArr(array) {
     return array[getRandomNumber(array)];
 }
-
-
-//generates random card, if duplicate will reroll card. assigns suit and value as class id
+//generates random card, assigns value/suit - if duplicate will reroll card. assigns suit and value as class id
 function generateCard() {
     let cardText, valueClass, suitClass, value, suit;
     do {
@@ -58,15 +52,7 @@ function setCard(selector, cardInfo) {
     cardEl.textContent = cardInfo.text;
     cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
     cardEl.classList.add("card")
-    // cardEl.classList.remove("hidden")
 }
-
-
-
-
-
-
-
 
 //object selectors 
 const dealCardsBtn = document.querySelector("#deal-cards")
@@ -101,8 +87,6 @@ resetBtn.disabled = true;
 standBtn.disabled = true;
 hitPlayerBtn.disabled = true;
 
-
-
 //btn events
 dealCardsBtn.addEventListener("click", dealCards);
 hitPlayerBtn.addEventListener("click", dealCardPlayer);
@@ -112,65 +96,59 @@ bet10Btn.addEventListener("click", bet10fn);
 bet50Btn.addEventListener("click", bet50fn);
 bet100Btn.addEventListener("click", bet100fn);
 
-
-
 //dealer/player cards
 function dealCards() {
+    playCardsAudio()
 
-    if (potSize !== 0) {
-        messageSelector.textContent = ""
-    }
-
-    setCard(".dealer-card-1", generateCard());
-    setCard(".player-card-1", generateCard());
-    setCard(".player-card-2", generateCard());
-
-    updatePlayerScore();
-    updateDealerScore();
-    updateDeckSize();
-    enableButtons();
-
-    if (dealtCards.size > 48) {
-        shuffleDeck();
-        updateDeckSize();
-    }
-}
-
-
-//deal single card to player on hit, add suit and value to class
-
-
-function dealCardPlayer() {
-    for (let cardEl of playerCards) {
-        if (!cardEl.textContent || cardEl.textContent === "") {
-            let cardInfo = generateCard();
-            cardEl.textContent = cardInfo.text;
-            cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
-            cardEl.classList.add("card")
-
-            break;
+    setTimeout(() => {
+        if (potSize !== 0) {
+            messageSelector.textContent = ""
         }
-    }
 
+        setCard(".dealer-card-1", generateCard());
+        setCard(".player-card-1", generateCard());
+        setCard(".player-card-2", generateCard());
 
-
-
-    updatePlayerScore();
-    updateDeckSize()
-
-    if (dealtCards.size > 50) {
-        shuffleDeck();
+        updatePlayerScore();
+        updateDealerScore();
         updateDeckSize();
-    }
+        enableButtons();
 
-    if (playerHandScore === 21) {
-        standHand();
-    }
+        if (dealtCards.size > 48) {
+            shuffleDeck();
+            updateDeckSize();
+        }
+    }, 1000);
 }
 
+//deal single card to player on hit, add suit and value as class id
+function dealCardPlayer() {
+    playTapToHitAudio()
+
+    setTimeout(() => {
+        for (let cardEl of playerCards) {
+            if (!cardEl.textContent || cardEl.textContent === "") {
+                let cardInfo = generateCard();
+                cardEl.textContent = cardInfo.text;
+                cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
+                cardEl.classList.add("card")
+                break;
+            }
+        }
+        updatePlayerScore();
+        updateDeckSize()
+
+        if (dealtCards.size > 50) {
+            shuffleDeck();
+            updateDeckSize();
+        }
+
+        if (playerHandScore === 21) {
+            standHand();
+        }
+    }, 500);
+}
 //loop to deal single card to dealer until dealer score is higher than player or bust. adds suit and value to class id
-
-
 function dealCardDealer() {
     let dealerScoreValue = calcDealerScore();
 
@@ -181,13 +159,11 @@ function dealCardDealer() {
                 cardEl.textContent = cardInfo.text;
                 cardEl.classList.add(cardInfo.valueClass, cardInfo.suitClass);
                 cardEl.classList.add("card")
-
                 break;
             }
         }
         dealerScoreValue = calcDealerScore();
     }
-
     updateDealerScore();
     updateDeckSize();
 
@@ -195,18 +171,12 @@ function dealCardDealer() {
         shuffleDeck();
         updateDeckSize();
     }
-
 }
-
-
-
 
 // //finding players hand score
 function calcPlayerScore() {
     playerHandScore = 0;
     let numAces = 0;
-
-
 
     for (let cardEl of playerCards) {
         if (cardEl.textContent) {
@@ -215,16 +185,13 @@ function calcPlayerScore() {
             if (card === 'Ace') {
                 numAces += 1;
             }
-
             playerHandScore = playerHandScore + cardValues[card];
         }
     }
-
     while (playerHandScore > 21 && numAces >= 1) {
         playerHandScore = playerHandScore - 10;
         numAces = numAces - 1;
     }
-
     return playerHandScore
 }
 
@@ -240,7 +207,6 @@ function calcDealerScore() {
             if (card === 'Ace') {
                 numAces += 1;
             }
-
             dealerHandScore = dealerHandScore + cardValues[card];
         }
     }
@@ -249,10 +215,8 @@ function calcDealerScore() {
         dealerHandScore = dealerHandScore - 10;
         numAces = numAces - 1;
     }
-
     return dealerHandScore
 }
-
 
 //updating player score
 function updatePlayerScore() {
@@ -265,7 +229,6 @@ function updatePlayerScore() {
 }
 
 //updating dealer score
-
 function updateDealerScore() {
     const score = calcDealerScore();
     dealerScore.textContent = "Dealer Score: " + score;
@@ -276,8 +239,6 @@ function standHand() {
     dealCardDealer();
     determineWinner();
 }
-
-
 
 //function to reset dealtCards (shuffle deck)
 function shuffleDeck() {
@@ -290,9 +251,7 @@ function updateDeckSize() {
     deckSize.textContent = "Cards Left: " + remainingCards;
 }
 
-
 //determine winner
-
 function determineWinner() {
     const playerScore = calcPlayerScore();
     const dealerScore = calcDealerScore();
@@ -311,17 +270,14 @@ function determineWinner() {
     } else if (dealerScore > playerScore) {
         result = "Dealer wins!";
     } else {
-        stackValue = stackValue + potSize
         result = "It's a draw!";
+        stackValue = stackValue + potSize
         stackSelector.textContent = `Stack: $${stackValue}`;
     }
-
     messageSelector.textContent = result;
     stackSelector.textContent = `Stack: $${stackValue}`;
     hitPlayerBtn.disabled = true;
     standBtn.disabled = true;
-
-
 
     setTimeout(resetTable, 3500)
 
@@ -329,8 +285,6 @@ function determineWinner() {
 
 //reset everything but account balance
 function resetTable() {
-
-
     removeCardClasses();
     shuffleDeck();
     playerCards.forEach(card => card.textContent = "");
@@ -350,9 +304,7 @@ function resetTable() {
     if (potSize === 0) {
         messageSelector.textContent = "Place Bet!"
     }
-
 }
-
 
 //enable/disable buttons
 function enableButtons() {
@@ -364,9 +316,11 @@ function enableButtons() {
     bet50Btn.disabled = true;
     bet100Btn.disabled = true;
 }
+
 //stackValue/potSize
 //add $$$ to pot, decrease from stack
 function bet10fn() {
+    playPokerChipAudio()
     if (stackValue < 10) {
         return
     }
@@ -375,10 +329,10 @@ function bet10fn() {
     potSizeSelector.textContent = `Pot Size: $${potSize}`;
     stackSelector.textContent = `Stack: $${stackValue}`;
     dealCardsBtn.disabled = false;
-
-
 }
+
 function bet50fn() {
+    playPokerChipAudio()
     if (stackValue < 50) {
         return
     }
@@ -388,7 +342,9 @@ function bet50fn() {
     stackSelector.textContent = `Stack: $${stackValue}`;
     dealCardsBtn.disabled = false;
 }
+
 function bet100fn() {
+    playPokerChipAudio()
     if (stackValue < 100) {
         return
     }
@@ -400,9 +356,7 @@ function bet100fn() {
 }
 
 //remove assigned class of suit and value
-
 function removeCardClasses() {
-
 
     playerCards.forEach(card => {
         card.classList.remove("card");
@@ -415,7 +369,6 @@ function removeCardClasses() {
         });
     });
 
-
     dealerCards.forEach(card => {
         card.classList.remove("card");
         card.textContent = "";
@@ -425,9 +378,26 @@ function removeCardClasses() {
         values.forEach(value => {
             card.classList.remove(value);
         });
-
     });
+}
 
+function playPokerChipAudio() {
+    const pokerChipAudio = document.getElementById("audio-pokerchip")
+    pokerChipAudio.currentTime = 0;
+    pokerChipAudio.play();
+}
 
-
+function playCardsAudio() {
+    const dealCardsAudio = document.getElementById("audio-cards")
+    dealCardsAudio.currentTime = 0;
+    dealCardsAudio.play();
+}
+function playTapToHitAudio() {
+    const tapToHitAudio = document.getElementById("audio-taptohit")
+    tapToHitAudio.currentTime = 0;
+    tapToHitAudio.playbackRate = 1.5;
+    tapToHitAudio.play();
+    setTimeout(() => {
+        tapToHitAudio.pause();
+    }, 300);
 }
