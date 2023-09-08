@@ -125,6 +125,8 @@ function dealCards() {
 function dealCardPlayer() {
     playTapToHitAudio()
 
+
+
     setTimeout(() => {
         for (let cardEl of playerCards) {
             if (!cardEl.textContent || cardEl.textContent === "") {
@@ -135,6 +137,9 @@ function dealCardPlayer() {
                 break;
             }
         }
+
+
+
         updatePlayerScore();
         updateDeckSize()
 
@@ -143,11 +148,13 @@ function dealCardPlayer() {
             updateDeckSize();
         }
 
-        if (playerHandScore === 21) {
-            standHand();
-        }
     }, 500);
+
+    if (playerHandScore === 21) {
+        standHand();
+    }
 }
+
 //loop to deal single card to dealer until dealer score is higher than player or bust. adds suit and value to class id
 function dealCardDealer() {
     let dealerScoreValue = calcDealerScore();
@@ -182,16 +189,21 @@ function calcPlayerScore() {
         if (cardEl.textContent) {
             let card = cardEl.textContent.split(" of ")[0];
 
-            if (card === 'Ace') {
+            if (card === 'A') {
                 numAces += 1;
             }
             playerHandScore = playerHandScore + cardValues[card];
+
+
+            while (playerHandScore > 21 && numAces >= 1) {
+                playerHandScore = playerHandScore - 10;
+                numAces = numAces - 1;
+            }
         }
+
     }
-    while (playerHandScore > 21 && numAces >= 1) {
-        playerHandScore = playerHandScore - 10;
-        numAces = numAces - 1;
-    }
+
+
     return playerHandScore
 }
 
@@ -204,7 +216,7 @@ function calcDealerScore() {
         if (cardEl.textContent) {
             let card = cardEl.textContent.split(" of ")[0];
 
-            if (card === 'Ace') {
+            if (card === 'A') {
                 numAces += 1;
             }
             dealerHandScore = dealerHandScore + cardValues[card];
